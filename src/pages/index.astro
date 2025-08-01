@@ -2,6 +2,8 @@
 import ChatLayout from '../layouts/ChatLayout.astro';
 import MessageList from '../components/MessageList';
 import MessageInput from '../components/MessageInput';
+import UserStats from '../components/UserStats';
+import OnlineUsers from '../components/OnlineUsers';
 ---
 
 <ChatLayout title="Astro + Convex Chat">
@@ -27,9 +29,18 @@ import MessageInput from '../components/MessageInput';
     </header>
 
     <!-- Chat Container -->
-    <main class="flex-1 max-w-4xl mx-auto w-full bg-white shadow-lg flex flex-col">
-      <MessageList client:load />
-      <MessageInput client:load />
+    <main class="flex-1 max-w-6xl mx-auto w-full flex gap-4">
+      <!-- Main Chat Area -->
+      <div class="flex-1 bg-white shadow-lg flex flex-col">
+        <MessageList client:load />
+        <MessageInput client:load />
+      </div>
+
+      <!-- Sidebar with User Stats and Online Users -->
+      <aside class="w-80 hidden lg:block space-y-4">
+        <OnlineUsers client:load />
+        <UserStats client:load />
+      </aside>
     </main>
 
     <!-- Footer -->

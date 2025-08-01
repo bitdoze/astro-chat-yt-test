@@ -7,14 +7,21 @@ export default defineSchema({
     name: v.string(),
     email: v.optional(v.string()),
     avatar: v.optional(v.string()),
-  }).index("by_email", ["email"]),
+    lastSeen: v.number(),
+  })
+    .index("by_email", ["email"])
+    .index("by_name", ["name"]),
 
   // Messages table for chat messages
   messages: defineTable({
-    author: v.string(),
+    userId: v.id("users"),
+    author: v.string(), // Keep for backwards compatibility and display
     body: v.string(),
     timestamp: v.number(),
-  }).index("by_timestamp", ["timestamp"]),
+  })
+    .index("by_timestamp", ["timestamp"])
+    .index("by_user", ["userId"])
+    .index("by_user_timestamp", ["userId", "timestamp"]),
 
   // Rooms table for different chat rooms (future enhancement)
   rooms: defineTable({

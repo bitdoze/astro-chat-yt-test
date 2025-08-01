@@ -4,7 +4,7 @@ import { withConvexProvider } from "../lib/convex";
 import { clsx } from "clsx";
 
 function MessageListComponent() {
-  const messages = useQuery(api.messages.getMessages);
+  const messages = useQuery(api.messages.getMessagesWithUsers);
   const messageCount = useQuery(api.messages.getMessageCount);
 
   if (messages === undefined) {
@@ -46,9 +46,19 @@ function MessageListComponent() {
               )}
             >
               <div className="flex items-center justify-between mb-1">
-                <span className="text-xs font-medium opacity-90">
-                  {message.author}
-                </span>
+                <div className="flex items-center gap-2">
+                  <div className="w-6 h-6 bg-white bg-opacity-20 rounded-full flex items-center justify-center text-xs font-bold">
+                    {message.author.charAt(0).toUpperCase()}
+                  </div>
+                  <span className="text-xs font-medium opacity-90">
+                    {message.author}
+                  </span>
+                  {message.user &&
+                    "email" in message.user &&
+                    message.user.email && (
+                      <span className="text-xs opacity-60">✓</span>
+                    )}
+                </div>
                 <span className="text-xs opacity-75">
                   {new Date(message.timestamp).toLocaleTimeString([], {
                     hour: "2-digit",
